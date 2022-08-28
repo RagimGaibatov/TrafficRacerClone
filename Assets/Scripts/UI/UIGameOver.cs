@@ -25,15 +25,15 @@ namespace UI{
         [SerializeField] private TextMeshProUGUI currentPriceSteer;
 
         private Score _score;
-        private BootsTrapper _bootsTrapper;
+        private BootStrapper _bootStrapper;
         private Money _money;
 
         private ShopInfo _shopInfo;
         private CarСharacteristics _carСharacteristics;
 
-        public void Construct(Score score, PlayerController playerController, BootsTrapper bootsTrapper, Money money,
+        public void Construct(Score score, PlayerController playerController, BootStrapper bootStrapper, Money money,
             ShopInfo shopInfo, CarСharacteristics carСharacteristics){
-            _bootsTrapper = bootsTrapper;
+            _bootStrapper = bootStrapper;
             _score = score;
             _playerController = playerController;
             _playerController.OnGameOver += OpenGameOverWindow;
@@ -136,11 +136,11 @@ namespace UI{
 
 
         public void RestartGame(){
-            _bootsTrapper.RestartGame();
+            _bootStrapper.RestartGame();
         }
 
         public void QuitGame(){
-            _bootsTrapper.QuitGame();
+            _bootStrapper.QuitGame();
         }
     }
 }

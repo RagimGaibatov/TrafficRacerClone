@@ -3,7 +3,7 @@ using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class BootsTrapper : MonoBehaviour{
+public class BootStrapper : MonoBehaviour{
     [SerializeField] Road roadPrefab;
     [SerializeField] private Vector3 roadPosition;
     [SerializeField] PlayerController playerPrefab;
