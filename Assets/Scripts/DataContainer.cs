@@ -3,7 +3,7 @@ public class DataContainer{
     public int power = 335;
     public int maxSpeedInMiles = 90;
     public int minSpeedInMiles = 12;
-    public int brakeStrength = 500;
+    public int brakeStrength = 1400;
     public float steer = 0.85f;
 
 

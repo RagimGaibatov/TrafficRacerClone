@@ -77,6 +77,7 @@ public class BootStrapper : MonoBehaviour{
     void CreateRoad(){
         _road = Instantiate(roadPrefab, roadPosition, Quaternion.identity);
         _road.Constuct(_player);
+        _road.GetComponentInChildren<OrderBuildings>().Construct(_player);
     }
 
     void CreateScore(){

@@ -74,7 +74,7 @@ namespace UI{
             //update UIMoneyText
             while (UIScoreNumber >= 0){
                 UIScoreNumber -= 100;
-                _money.MoneyCount += 10;
+                _money.MoneyCount += 18;
                 yield return null;
                 moneyText.text = $"Money : {_money.MoneyCount}";
             }
