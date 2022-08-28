@@ -14,7 +14,7 @@ public class OrderBuildings : MonoBehaviour{
     }
 
     private void Update(){
-        transform.Translate(_playerController.SpeedInMiles * Time.deltaTime, 0, 0);
+        transform.Translate(_playerController.SpeedInMiles * Time.deltaTime * 0.5f, 0, 0);
     }
 
     private void OnTriggerEnter(Collider other){
