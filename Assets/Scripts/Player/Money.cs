@@ -3,12 +3,12 @@ using UnityEngine;
 
 
 public class Money : MonoBehaviour, ISaveable{
-    private int money;
+    private int _amountOfMoney;
 
 
-    public int MoneyCount{
-        get => money;
-        set => money = value;
+    public int AmountOfMoney{
+        get => _amountOfMoney;
+        set => _amountOfMoney = value;
     }
 
     private DataContainer _dataContainer;
@@ -19,10 +19,10 @@ public class Money : MonoBehaviour, ISaveable{
     }
 
     public void LoadData(){
-        money = _dataContainer.money;
+        _amountOfMoney = _dataContainer.money;
     }
 
     public void SaveData(){
-        _dataContainer.money = money;
+        _dataContainer.money = _amountOfMoney;
     }
 }

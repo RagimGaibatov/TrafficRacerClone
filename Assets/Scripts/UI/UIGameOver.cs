@@ -2,6 +2,7 @@ using System.Collections;
 using Player;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 namespace UI{
     public class UIGameOver : MonoBehaviour{
@@ -31,13 +32,13 @@ namespace UI{
         [SerializeField] private TextMeshProUGUI currentPriceMaxSpeedMPro;
         [SerializeField] private TextMeshProUGUI currentPriceSteerMPro;
 
-        private int UIScoreNumber;
         private Score _score;
         private BootStrapper _bootStrapper;
         private Money _money;
         private PlayerMovement _playerMovement;
         private ShopInfo _shopInfo;
         private CarСharacteristics _carСharacteristics;
+
 
         public void Construct(Score score, PlayerMovement playerMovement, BootStrapper bootStrapper, Money money,
             ShopInfo shopInfo, CarСharacteristics carСharacteristics){
@@ -56,48 +57,28 @@ namespace UI{
 
         public void OpenGameOverWindow(){
             GameOverWindow.SetActive(true);
-            StartCoroutine(RefreshAllUI());
+            RefreshUI();
         }
 
-        IEnumerator RefreshAllUI(){
+
+        private void RefreshUI(){
             UpdateMaxSpeedUI();
             UpdateBrakeUI();
             UpdateSteerUI();
             UpdatePowerUI();
-            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+            UpdateScoresUI();
 
-            //update UIScoreText
-            while (UIScoreNumber <= _score.GetScore){
-                yield return null;
-                UIScoreNumber += 100;
-                scoreTextMPro.text = ScoreText + UIScoreNumber;
-            }
-
-            UIScoreNumber = _score.GetScore;
-            scoreTextMPro.text = ScoreText + UIScoreNumber;
-
-            if (_score.GetScore > _score.BestScore){
-                _score.BestScore = _score.GetScore;
-            }
-
-            bestScoreTextMPro.text = BestScoreText + _score.BestScore;
-
-            //update UIMoneyText
-            while (UIScoreNumber >= 0){
-                UIScoreNumber -= 100;
-                _money.MoneyCount += 15;
-                yield return null;
-                moneyTextMPro.text = MoneyText + _money.MoneyCount;
-            }
-
-            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+            var newMoney = _money.AmountOfMoney + _score.GetScore / 15;
+            DOVirtual.Int(_money.AmountOfMoney, newMoney, 4f,
+                currentMoney => moneyTextMPro.text = MoneyText + currentMoney);
+            _money.AmountOfMoney = newMoney;
         }
 
 
         public void BuyPower(){
-            if (_money.MoneyCount > _shopInfo.pricePower){
+            if (_money.AmountOfMoney > _shopInfo.pricePower){
                 _carСharacteristics.power += _shopInfo.addPower;
-                _money.MoneyCount -= _shopInfo.pricePower;
+                _money.AmountOfMoney -= _shopInfo.pricePower;
                 _shopInfo.addPower = (int) (_shopInfo.multiplier * _shopInfo.addPower);
                 _shopInfo.pricePower = (int) (_shopInfo.multiplier * _shopInfo.pricePower);
                 UpdatePowerUI();
@@ -105,9 +86,9 @@ namespace UI{
         }
 
         public void BuyBrakeStrength(){
-            if (_money.MoneyCount > _shopInfo.priceBrake){
+            if (_money.AmountOfMoney > _shopInfo.priceBrake){
                 _carСharacteristics.brakeStrength += _shopInfo.addBrakeStrength;
-                _money.MoneyCount -= _shopInfo.priceBrake;
+                _money.AmountOfMoney -= _shopInfo.priceBrake;
                 _shopInfo.addBrakeStrength = (int) (_shopInfo.multiplier * _shopInfo.addBrakeStrength);
                 _shopInfo.priceBrake = (int) (_shopInfo.multiplier * _shopInfo.priceBrake);
                 UpdateBrakeUI();
@@ -115,9 +96,9 @@ namespace UI{
         }
 
         public void BuyMaxSpeed(){
-            if (_money.MoneyCount > _shopInfo.priceSpeed){
+            if (_money.AmountOfMoney > _shopInfo.priceSpeed){
                 _carСharacteristics.maxSpeedInMiles += _shopInfo.addSpeed;
-                _money.MoneyCount -= _shopInfo.priceSpeed;
+                _money.AmountOfMoney -= _shopInfo.priceSpeed;
                 _shopInfo.addSpeed = (int) (_shopInfo.multiplier * _shopInfo.addSpeed);
                 _shopInfo.priceSpeed = (int) (_shopInfo.multiplier * _shopInfo.priceSpeed);
                 UpdateMaxSpeedUI();
@@ -125,9 +106,9 @@ namespace UI{
         }
 
         public void BuySteer(){
-            if (_money.MoneyCount > _shopInfo.priceSteer){
+            if (_money.AmountOfMoney > _shopInfo.priceSteer){
                 _carСharacteristics.steer += _shopInfo.addSteer;
-                _money.MoneyCount -= _shopInfo.priceSteer;
+                _money.AmountOfMoney -= _shopInfo.priceSteer;
                 _shopInfo.addSteer = _shopInfo.multiplier * _shopInfo.addSteer;
                 _shopInfo.priceSteer = (int) (_shopInfo.multiplier * _shopInfo.priceSteer);
                 UpdateSteerUI();
@@ -143,28 +124,38 @@ namespace UI{
             _bootStrapper.QuitGame();
         }
 
+
+        private void UpdateScoresUI(){
+            scoreTextMPro.text = ScoreText + _score.GetScore;
+            if (_score.GetScore > _score.BestScore){
+                _score.BestScore = _score.GetScore;
+            }
+
+            bestScoreTextMPro.text = BestScoreText + _score.BestScore;
+        }
+
         private void UpdateMaxSpeedUI(){
             currentMaxSpeedTextMPro.text = MaxSpeedText + (int) (1.6f * _playerMovement.MaxSpeed);
             currentPriceMaxSpeedMPro.text = PriceText + _shopInfo.priceSpeed;
-            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+            moneyTextMPro.text = MoneyText + _money.AmountOfMoney;
         }
 
         private void UpdatePowerUI(){
             currentPowerTextMPro.text = PowerText + _playerMovement.Power;
             currentPricePowerMPro.text = PriceText + _shopInfo.pricePower;
-            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+            moneyTextMPro.text = MoneyText + _money.AmountOfMoney;
         }
 
         private void UpdateBrakeUI(){
             currentBrakeTextMPro.text = BrakeText + _playerMovement.BrakeStrength;
             currentPriceBrakeMPro.text = PriceText + _shopInfo.priceBrake;
-            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+            moneyTextMPro.text = MoneyText + _money.AmountOfMoney;
         }
 
         private void UpdateSteerUI(){
             currentSteerTextMPro.text = SteerText + $"{_playerMovement.Steer:F2}";
             currentPriceSteerMPro.text = PriceText + _shopInfo.priceSteer;
-            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+            moneyTextMPro.text = MoneyText + _money.AmountOfMoney;
         }
     }
 }
