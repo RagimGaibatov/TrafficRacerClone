@@ -7,18 +7,18 @@ public class DataContainer{
     public float steer = 0.85f;
 
 
-    public int pricePower = 125;
-    public int priceSpeed = 100;
-    public int priceBrake = 60;
-    public int priceSteer = 50;
+    public int pricePower = 145;
+    public int priceSpeed = 110;
+    public int priceBrake = 65;
+    public int priceSteer = 55;
 
-    public int addPower = 4;
-    public int addBrakeStrength = 100;
-    public int addSpeed = 5;
-    public float addSteer = 0.07f;
+    public int addPower = 3;
+    public int addBrakeStrength = 90;
+    public int addSpeed = 3;
+    public float addSteer = 0.055f;
 
     public int money = 300;
     public int bestScore = 0;
 
-    public float multiplier = 1.3f;
+    public float multiplier = 1.25f;
 }

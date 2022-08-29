@@ -12,12 +12,16 @@ public class CarСharacteristics : ISaveable{
 
     public CarСharacteristics(DataContainer dataContainer){
         _dataContainer = dataContainer;
+        minSpeedInMiles = _dataContainer.minSpeedInMiles;
+    }
+
+    public void ResetMinSpeedToNull(){
+        minSpeedInMiles = 0;
     }
 
     public void LoadData(){
         power = _dataContainer.power;
         maxSpeedInMiles = _dataContainer.maxSpeedInMiles;
-        minSpeedInMiles = _dataContainer.minSpeedInMiles;
         brakeStrength = _dataContainer.brakeStrength;
         steer = _dataContainer.steer;
     }
@@ -25,7 +29,6 @@ public class CarСharacteristics : ISaveable{
     public void SaveData(){
         _dataContainer.power = power;
         _dataContainer.maxSpeedInMiles = maxSpeedInMiles;
-        _dataContainer.minSpeedInMiles = minSpeedInMiles;
         _dataContainer.brakeStrength = brakeStrength;
         _dataContainer.steer = steer;
     }

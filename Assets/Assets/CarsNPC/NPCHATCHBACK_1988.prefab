@@ -1420,9 +1420,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2947298928909639879}
   - component: {fileID: 172988870216537885}
+  - component: {fileID: 2215580499689476317}
   m_Layer: 0
   m_Name: ScoreArea
-  m_TagString: ScoreArea
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1455,3 +1456,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 1.5, z: 3}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &2215580499689476317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5425766089186615990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b85efa7dd324fc4a77463d44c578972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

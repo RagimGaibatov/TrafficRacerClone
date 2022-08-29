@@ -1,10 +1,12 @@
+using NPC;
+using Player;
 using UnityEngine;
 
 public class NPCCar : MonoBehaviour{
     [SerializeField] private float speed;
     private float defaultSpeed;
 
-    private PlayerController _playerController;
+    private PlayerMovement _playerMovement;
 
     private CarsSpawner _carsSpawner;
 
@@ -14,8 +16,8 @@ public class NPCCar : MonoBehaviour{
     private void Start(){
         defaultSpeed = speed;
 
-        _playerController = FindObjectOfType<PlayerController>();
-        _transformPlayer = _playerController.transform;
+        _playerMovement = FindObjectOfType<PlayerMovement>();
+        _transformPlayer = _playerMovement.transform;
         _carsSpawner = FindObjectOfType<CarsSpawner>();
     }
 
@@ -32,10 +34,10 @@ public class NPCCar : MonoBehaviour{
 
         float dot = Vector3.Dot(transform.forward, _transformPlayer.forward);
         if (dot > 0){
-            transform.Translate((Vector3.forward * (speed - _playerController.SpeedInMiles)) * Time.deltaTime);
+            transform.Translate((Vector3.forward * (speed - _playerMovement.SpeedInMiles)) * Time.deltaTime);
         }
         else{
-            transform.Translate((Vector3.forward * (speed + _playerController.SpeedInMiles)) * Time.deltaTime);
+            transform.Translate((Vector3.forward * (speed + _playerMovement.SpeedInMiles)) * Time.deltaTime);
         }
     }
 

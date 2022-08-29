@@ -1,12 +1,12 @@
-using System;
+using Player;
 using UnityEngine;
 
 public class OrderBuildings : MonoBehaviour{
-    private PlayerController _playerController;
+    private PlayerMovement _playerMovement;
     private Vector3 defaultPos;
 
-    public void Construct(PlayerController playerController){
-        _playerController = playerController;
+    public void Construct(PlayerMovement playerMovement){
+        _playerMovement = playerMovement;
     }
 
     private void Awake(){
@@ -14,11 +14,11 @@ public class OrderBuildings : MonoBehaviour{
     }
 
     private void Update(){
-        transform.Translate(_playerController.SpeedInMiles * Time.deltaTime * 0.5f, 0, 0);
+        transform.Translate(_playerMovement.SpeedInMiles * Time.deltaTime * 0.5f, 0, 0);
     }
 
     private void OnTriggerEnter(Collider other){
-        if (other.GetComponent<PlayerController>()){
+        if (other.GetComponent<PlayerMovement>()){
             transform.position = defaultPos;
         }
     }

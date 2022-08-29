@@ -2780,7 +2780,7 @@ GameObject:
   - component: {fileID: 2063177454}
   - component: {fileID: 2063177453}
   m_Layer: 5
-  m_Name: MaxSpeedText
+  m_Name: BuyMaxSpeed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3849,18 +3849,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bcc266941e3c7498a82cdef57cb226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bestScoreText: {fileID: 967120690}
-  scoreText: {fileID: 522524258}
   GameOverWindow: {fileID: 2045325936}
-  moneyText: {fileID: 1494874938}
-  currentPowerText: {fileID: 1226434855}
-  currentMaxSpeedText: {fileID: 880824860}
-  currentBrakeText: {fileID: 1878320418}
-  currentSteerText: {fileID: 5823576046385325119}
-  currentPricePower: {fileID: 1877992946}
-  currentPriceBrake: {fileID: 1392655965}
-  currentPriceMaxSpeed: {fileID: 944478049}
-  currentPriceSteer: {fileID: 415891681289012885}
+  bestScoreTextMPro: {fileID: 967120690}
+  scoreTextMPro: {fileID: 522524258}
+  moneyTextMPro: {fileID: 1494874938}
+  currentPowerTextMPro: {fileID: 1226434855}
+  currentMaxSpeedTextMPro: {fileID: 880824860}
+  currentBrakeTextMPro: {fileID: 1878320418}
+  currentSteerTextMPro: {fileID: 5823576046385325119}
+  currentPricePowerMPro: {fileID: 1877992946}
+  currentPriceBrakeMPro: {fileID: 1392655965}
+  currentPriceMaxSpeedMPro: {fileID: 944478049}
+  currentPriceSteerMPro: {fileID: 415891681289012885}
 --- !u!114 &-3630304807881425256
 MonoBehaviour:
   m_ObjectHideFlags: 0

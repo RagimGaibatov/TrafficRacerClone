@@ -1,49 +1,57 @@
 using System.Collections;
+using Player;
 using TMPro;
 using UnityEngine;
 
 namespace UI{
     public class UIGameOver : MonoBehaviour{
-        private PlayerController _playerController;
+        private const string BestScoreText = "BestScore : ";
+        private const string ScoreText = "Score : ";
+        private const string MoneyText = "Money : ";
+        private const string PriceText = "Price : ";
+        private const string BrakeText = "BrakeStrength : ";
+        private const string PowerText = "Power : ";
+        private const string SteerText = "Steer : ";
+        private const string MaxSpeedText = "MaxSpeed : ";
 
-        [SerializeField] private TextMeshProUGUI bestScoreText;
-        [SerializeField] private TextMeshProUGUI scoreText;
-        private int UIScoreNumber;
 
         [SerializeField] private GameObject GameOverWindow;
 
-        [SerializeField] private TextMeshProUGUI moneyText;
+        [SerializeField] private TextMeshProUGUI bestScoreTextMPro;
+        [SerializeField] private TextMeshProUGUI scoreTextMPro;
+        [SerializeField] private TextMeshProUGUI moneyTextMPro;
 
-        [SerializeField] private TextMeshProUGUI currentPowerText;
-        [SerializeField] private TextMeshProUGUI currentMaxSpeedText;
-        [SerializeField] private TextMeshProUGUI currentBrakeText;
-        [SerializeField] private TextMeshProUGUI currentSteerText;
+        [SerializeField] private TextMeshProUGUI currentPowerTextMPro;
+        [SerializeField] private TextMeshProUGUI currentMaxSpeedTextMPro;
+        [SerializeField] private TextMeshProUGUI currentBrakeTextMPro;
+        [SerializeField] private TextMeshProUGUI currentSteerTextMPro;
 
-        [SerializeField] private TextMeshProUGUI currentPricePower;
-        [SerializeField] private TextMeshProUGUI currentPriceBrake;
-        [SerializeField] private TextMeshProUGUI currentPriceMaxSpeed;
-        [SerializeField] private TextMeshProUGUI currentPriceSteer;
+        [SerializeField] private TextMeshProUGUI currentPricePowerMPro;
+        [SerializeField] private TextMeshProUGUI currentPriceBrakeMPro;
+        [SerializeField] private TextMeshProUGUI currentPriceMaxSpeedMPro;
+        [SerializeField] private TextMeshProUGUI currentPriceSteerMPro;
 
+        private int UIScoreNumber;
         private Score _score;
         private BootStrapper _bootStrapper;
         private Money _money;
-
+        private PlayerMovement _playerMovement;
         private ShopInfo _shopInfo;
         private CarСharacteristics _carСharacteristics;
 
-        public void Construct(Score score, PlayerController playerController, BootStrapper bootStrapper, Money money,
+        public void Construct(Score score, PlayerMovement playerMovement, BootStrapper bootStrapper, Money money,
             ShopInfo shopInfo, CarСharacteristics carСharacteristics){
             _bootStrapper = bootStrapper;
             _score = score;
-            _playerController = playerController;
-            _playerController.OnGameOver += OpenGameOverWindow;
+            _playerMovement = playerMovement;
+            _playerMovement.OnGameOver += OpenGameOverWindow;
             _money = money;
             _shopInfo = shopInfo;
             _carСharacteristics = carСharacteristics;
         }
 
         private void OnDestroy(){
-            _playerController.OnGameOver -= OpenGameOverWindow;
+            _playerMovement.OnGameOver -= OpenGameOverWindow;
         }
 
         public void OpenGameOverWindow(){
@@ -52,47 +60,39 @@ namespace UI{
         }
 
         IEnumerator RefreshAllUI(){
-            UpdateUICharacteristicsText();
-            moneyText.text = "Money : " + _money.MoneyCount;
+            UpdateMaxSpeedUI();
+            UpdateBrakeUI();
+            UpdateSteerUI();
+            UpdatePowerUI();
+            moneyTextMPro.text = MoneyText + _money.MoneyCount;
 
             //update UIScoreText
             while (UIScoreNumber <= _score.GetScore){
                 yield return null;
                 UIScoreNumber += 100;
-                scoreText.text = "Score : " + UIScoreNumber;
+                scoreTextMPro.text = ScoreText + UIScoreNumber;
             }
 
             UIScoreNumber = _score.GetScore;
-            scoreText.text = "Score : " + UIScoreNumber;
+            scoreTextMPro.text = ScoreText + UIScoreNumber;
 
             if (_score.GetScore > _score.BestScore){
                 _score.BestScore = _score.GetScore;
             }
 
-            bestScoreText.text = "Best Score : " + _score.BestScore;
+            bestScoreTextMPro.text = BestScoreText + _score.BestScore;
 
             //update UIMoneyText
             while (UIScoreNumber >= 0){
                 UIScoreNumber -= 100;
-                _money.MoneyCount += 18;
+                _money.MoneyCount += 15;
                 yield return null;
-                moneyText.text = $"Money : {_money.MoneyCount}";
+                moneyTextMPro.text = MoneyText + _money.MoneyCount;
             }
 
-            moneyText.text = $"Money : {_money.MoneyCount}";
+            moneyTextMPro.text = MoneyText + _money.MoneyCount;
         }
 
-        void UpdateUICharacteristicsText(){
-            moneyText.text = $"Money : {_money.MoneyCount}";
-            currentPowerText.text = $"Power : {_playerController.Power}";
-            currentBrakeText.text = $"BrakeStrength : {_playerController.BrakeStrength}";
-            currentMaxSpeedText.text = $"MaxSpeed : {(int) (1.6f * _playerController.MaxSpeed)}";
-            currentSteerText.text = $"Steer : {string.Format("{0:F2}", _playerController.Steer)}";
-            currentPricePower.text = $"Price : {_shopInfo.pricePower}";
-            currentPriceBrake.text = $"Price : {_shopInfo.priceBrake}";
-            currentPriceMaxSpeed.text = $"Price : {_shopInfo.priceSpeed}";
-            currentPriceSteer.text = $"Price : {_shopInfo.priceSteer}";
-        }
 
         public void BuyPower(){
             if (_money.MoneyCount > _shopInfo.pricePower){
@@ -100,7 +100,7 @@ namespace UI{
                 _money.MoneyCount -= _shopInfo.pricePower;
                 _shopInfo.addPower = (int) (_shopInfo.multiplier * _shopInfo.addPower);
                 _shopInfo.pricePower = (int) (_shopInfo.multiplier * _shopInfo.pricePower);
-                UpdateUICharacteristicsText();
+                UpdatePowerUI();
             }
         }
 
@@ -110,7 +110,7 @@ namespace UI{
                 _money.MoneyCount -= _shopInfo.priceBrake;
                 _shopInfo.addBrakeStrength = (int) (_shopInfo.multiplier * _shopInfo.addBrakeStrength);
                 _shopInfo.priceBrake = (int) (_shopInfo.multiplier * _shopInfo.priceBrake);
-                UpdateUICharacteristicsText();
+                UpdateBrakeUI();
             }
         }
 
@@ -120,7 +120,7 @@ namespace UI{
                 _money.MoneyCount -= _shopInfo.priceSpeed;
                 _shopInfo.addSpeed = (int) (_shopInfo.multiplier * _shopInfo.addSpeed);
                 _shopInfo.priceSpeed = (int) (_shopInfo.multiplier * _shopInfo.priceSpeed);
-                UpdateUICharacteristicsText();
+                UpdateMaxSpeedUI();
             }
         }
 
@@ -130,7 +130,7 @@ namespace UI{
                 _money.MoneyCount -= _shopInfo.priceSteer;
                 _shopInfo.addSteer = _shopInfo.multiplier * _shopInfo.addSteer;
                 _shopInfo.priceSteer = (int) (_shopInfo.multiplier * _shopInfo.priceSteer);
-                UpdateUICharacteristicsText();
+                UpdateSteerUI();
             }
         }
 
@@ -141,6 +141,30 @@ namespace UI{
 
         public void QuitGame(){
             _bootStrapper.QuitGame();
+        }
+
+        private void UpdateMaxSpeedUI(){
+            currentMaxSpeedTextMPro.text = MaxSpeedText + (int) (1.6f * _playerMovement.MaxSpeed);
+            currentPriceMaxSpeedMPro.text = PriceText + _shopInfo.priceSpeed;
+            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+        }
+
+        private void UpdatePowerUI(){
+            currentPowerTextMPro.text = PowerText + _playerMovement.Power;
+            currentPricePowerMPro.text = PriceText + _shopInfo.pricePower;
+            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+        }
+
+        private void UpdateBrakeUI(){
+            currentBrakeTextMPro.text = BrakeText + _playerMovement.BrakeStrength;
+            currentPriceBrakeMPro.text = PriceText + _shopInfo.priceBrake;
+            moneyTextMPro.text = MoneyText + _money.MoneyCount;
+        }
+
+        private void UpdateSteerUI(){
+            currentSteerTextMPro.text = SteerText + $"{_playerMovement.Steer:F2}";
+            currentPriceSteerMPro.text = PriceText + _shopInfo.priceSteer;
+            moneyTextMPro.text = MoneyText + _money.MoneyCount;
         }
     }
 }

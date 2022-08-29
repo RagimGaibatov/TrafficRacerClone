@@ -1,19 +1,20 @@
+using Player;
 using Save;
 using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BootStrapper : MonoBehaviour{
-    [SerializeField] Road roadPrefab;
-    [SerializeField] private Vector3 roadPosition;
-    [SerializeField] PlayerController playerPrefab;
-    [SerializeField] private Vector3 playerPosition;
-    [SerializeField] CarSoundManager carSoundManagerPrefab;
-    [SerializeField] Canvas canvasPrefab;
-    [SerializeField] private Score ScorePrefab;
-    [SerializeField] private Money moneyPrefab;
+    [SerializeField] private Vector3 _playerPosition;
+    [SerializeField] private Vector3 _roadPosition;
+    [SerializeField] Road _roadPrefab;
+    [SerializeField] PlayerMovement _playerPrefab;
+    [SerializeField] CarSoundManager _carSoundManagerPrefab;
+    [SerializeField] Canvas _canvasPrefab;
+    [SerializeField] private Score _ScorePrefab;
+    [SerializeField] private Money _moneyPrefab;
 
-    private PlayerController _player;
+    private PlayerMovement _player;
     private CarSoundManager _carSoundManager;
     private Road _road;
 
@@ -33,34 +34,39 @@ public class BootStrapper : MonoBehaviour{
 
     private void Awake(){
         _saveLoadController = new SaveLoadController();
+
         _dataContainer = _saveLoadController.Load();
 
         _carСharacteristics = new CarСharacteristics(_dataContainer);
         _shopInfo = new ShopInfo(_dataContainer);
 
+        CreateGameObjects();
+
+        _saveablesObjects = new SaveablesObjects(_carСharacteristics, _shopInfo, _money, _score);
+        _saveablesObjects.GetDataFromContainer();
+    }
+
+    private void CreateGameObjects(){
         CreateScore();
         CreatePlayer();
         CreateSoundManager();
         CreateMoney();
         CreateCanvas();
         CreateRoad();
-
-        _saveablesObjects = new SaveablesObjects(_carСharacteristics, _shopInfo, _money, _score);
-        _saveablesObjects.GetDataFromContainer();
     }
 
-    void CreatePlayer(){
-        _player = Instantiate(playerPrefab, playerPosition, Quaternion.identity);
+    private void CreatePlayer(){
+        _player = Instantiate(_playerPrefab, _playerPosition, Quaternion.identity);
         _player.Construct(_score, _carСharacteristics);
     }
 
-    void CreateSoundManager(){
-        _carSoundManager = Instantiate(carSoundManagerPrefab);
+    private void CreateSoundManager(){
+        _carSoundManager = Instantiate(_carSoundManagerPrefab);
         _carSoundManager.Construct(_player);
     }
 
-    void CreateCanvas(){
-        _canvas = Instantiate(canvasPrefab);
+    private void CreateCanvas(){
+        _canvas = Instantiate(_canvasPrefab);
         _UIScore = _canvas.GetComponent<UIScore>();
         _UIScore.Construct(_score);
         _UISpeedometr = _canvas.GetComponent<UISpeedometr>();
@@ -69,19 +75,19 @@ public class BootStrapper : MonoBehaviour{
         _uiGameOver.Construct(_score, _player, this, _money, _shopInfo, _carСharacteristics);
     }
 
-    void CreateMoney(){
-        _money = Instantiate(moneyPrefab);
+    private void CreateMoney(){
+        _money = Instantiate(_moneyPrefab);
         _money.Construct(_dataContainer);
     }
 
-    void CreateRoad(){
-        _road = Instantiate(roadPrefab, roadPosition, Quaternion.identity);
+    private void CreateRoad(){
+        _road = Instantiate(_roadPrefab, _roadPosition, Quaternion.identity);
         _road.Constuct(_player);
         _road.GetComponentInChildren<OrderBuildings>().Construct(_player);
     }
 
-    void CreateScore(){
-        _score = Instantiate(ScorePrefab);
+    private void CreateScore(){
+        _score = Instantiate(_ScorePrefab);
         _score.Construct(_dataContainer);
     }
 

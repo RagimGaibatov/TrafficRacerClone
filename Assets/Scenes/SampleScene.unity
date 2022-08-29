@@ -167,14 +167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25286acc88847f14386af05f014e2103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roadPrefab: {fileID: -4664285134261070129, guid: 56da7a315a79f814a868f0d61f9e655e, type: 3}
-  roadPosition: {x: 7.5, y: 0, z: 140}
-  playerPrefab: {fileID: 2581960626372763166, guid: 66ac1fbb7dffdaf408126beae0f93a5e, type: 3}
-  playerPosition: {x: 5, y: 0, z: 4}
-  carSoundManagerPrefab: {fileID: 558476053028802684, guid: 14705e0f48b415447a54ab3f6ec2f300, type: 3}
-  canvasPrefab: {fileID: 8609249240348227494, guid: 29a9a992998326641a61ff889ea51fef, type: 3}
-  ScorePrefab: {fileID: 7851818883304174889, guid: a7838833bf4cae9428fa4b9f68817fdc, type: 3}
-  moneyPrefab: {fileID: 6755955154809181316, guid: abbe14a5b85f0ab49a0fbb1ab4e69216, type: 3}
+  _playerPosition: {x: 5, y: 0, z: 4}
+  _roadPosition: {x: 7.5, y: 0, z: 140}
+  _roadPrefab: {fileID: -4664285134261070129, guid: 56da7a315a79f814a868f0d61f9e655e, type: 3}
+  _playerPrefab: {fileID: 2581960626372763166, guid: 66ac1fbb7dffdaf408126beae0f93a5e, type: 3}
+  _carSoundManagerPrefab: {fileID: 558476053028802684, guid: 14705e0f48b415447a54ab3f6ec2f300, type: 3}
+  _canvasPrefab: {fileID: 8609249240348227494, guid: 29a9a992998326641a61ff889ea51fef, type: 3}
+  _ScorePrefab: {fileID: 7851818883304174889, guid: a7838833bf4cae9428fa4b9f68817fdc, type: 3}
+  _moneyPrefab: {fileID: 6755955154809181316, guid: abbe14a5b85f0ab49a0fbb1ab4e69216, type: 3}
 --- !u!1 &537728948
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,7 @@
 using UnityEngine;
 
-public class RemoverNpc : MonoBehaviour
-{
+namespace NPC{
+    public class RemoverNpc : MonoBehaviour
+    {
+    }
 }
