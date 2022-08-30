@@ -81,6 +81,10 @@ namespace BootStrapper{
             _uiGameOver = _canvas.GetComponent<UIGameOver>();
             _uiGameOver.Construct(_score, _player, this, _money, _shopInfo, _carСharacteristics,
                 _player.GetComponent<GameOverPlayer>());
+            var horizontalMovementButtons = _uiGameOver.GetComponent<HorizontalMovementButtons>();
+            horizontalMovementButtons.Construct(_player);
+            var brakeButton = _uiGameOver.GetComponentInChildren<BrakeButton>();
+            brakeButton.Construct(_player, _carSoundManager);
         }
 
         private void CreateMoney(){

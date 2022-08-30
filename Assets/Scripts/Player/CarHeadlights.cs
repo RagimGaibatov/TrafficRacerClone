@@ -12,22 +12,12 @@ namespace Player{
             _defaultIntensity = rearLamp1.intensity;
         }
 
-        void Update(){
-            if (Input.GetKey(KeyCode.DownArrow)){
-                BrakeLight();
-            }
-
-            if (Input.GetKeyUp(KeyCode.DownArrow)){
-                DefaultLight();
-            }
-        }
-
-        void BrakeLight(){
+        public void BrakeLight(){
             rearLamp1.intensity = _defaultIntensity * intensityMultiplier;
             rearLamp2.intensity = _defaultIntensity * intensityMultiplier;
         }
 
-        void DefaultLight(){
+        public void DefaultLight(){
             rearLamp1.intensity = _defaultIntensity;
             rearLamp2.intensity = _defaultIntensity;
         }

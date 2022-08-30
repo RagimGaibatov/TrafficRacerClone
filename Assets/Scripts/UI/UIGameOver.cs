@@ -1,4 +1,3 @@
-using System.Collections;
 using Player;
 using TMPro;
 using UnityEngine;
@@ -32,6 +31,9 @@ namespace UI{
         [SerializeField] private TextMeshProUGUI currentPriceMaxSpeedMPro;
         [SerializeField] private TextMeshProUGUI currentPriceSteerMPro;
 
+        [SerializeField] private GameObject horizontalMovementButtons;
+        [SerializeField] private BrakeButton brakeButton;
+
         private Score _score;
         private BootStrapper.BootStrapper _bootStrapper;
         private Money _money;
@@ -41,8 +43,8 @@ namespace UI{
         private GameOverPlayer _gameOverPlayer;
 
 
-        public void Construct(Score score, PlayerMovement playerMovement, BootStrapper.BootStrapper bootStrapper, Money money,
-            ShopInfo shopInfo, CarСharacteristics carСharacteristics, GameOverPlayer gameOverPlayer){
+        public void Construct(Score score, PlayerMovement playerMovement, BootStrapper.BootStrapper bootStrapper,
+            Money money, ShopInfo shopInfo, CarСharacteristics carСharacteristics, GameOverPlayer gameOverPlayer){
             _bootStrapper = bootStrapper;
             _score = score;
             _playerMovement = playerMovement;
@@ -58,6 +60,8 @@ namespace UI{
         }
 
         public void OpenGameOverWindow(){
+            horizontalMovementButtons.SetActive(false);
+            brakeButton.gameObject.SetActive(false);
             GameOverWindow.SetActive(true);
             RefreshUI();
         }
@@ -71,7 +75,7 @@ namespace UI{
             UpdateScoresUI();
 
             var newMoney = _money.AmountOfMoney + _score.GetScore / 15;
-            DOVirtual.Int(_money.AmountOfMoney, newMoney, 4f,
+            DOVirtual.Int(_money.AmountOfMoney, newMoney, 3f,
                 currentMoney => moneyTextMPro.text = MoneyText + currentMoney);
             _money.AmountOfMoney = newMoney;
         }

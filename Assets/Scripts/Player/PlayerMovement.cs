@@ -20,7 +20,12 @@ namespace Player{
         public float SpeedInMiles => _speedInMiles;
         public float RelativelySpeed => _speedInMiles / _carСharacteristics.maxSpeedInMiles;
 
-        private float stopSpeed = 0;
+        private float _stopSpeed = 0;
+        private bool _isBraking;
+
+        [SerializeField] private ParticleSystem _leftParticleSystemWheel;
+        [SerializeField] private ParticleSystem _rightParticleSystemWheel;
+
 
         public void Construct(CarСharacteristics carСharacteristics){
             _carСharacteristics = carСharacteristics;
@@ -40,31 +45,30 @@ namespace Player{
             HorizontalMovement();
         }
 
+        public void PlayParticleWheel(){
+            var left = _leftParticleSystemWheel.main;
+            var right = _rightParticleSystemWheel.main;
+            left.startSize = RelativelySpeed;
+            right.startSize = RelativelySpeed;
+            _leftParticleSystemWheel.Play();
+            _rightParticleSystemWheel.Play();
+        }
+
 
         private void SpeedControl(){
-            if (Input.GetKey(KeyCode.DownArrow)){
+            if (_isBraking){
                 Brake();
             }
-
-            else if (_speedInMiles < _carСharacteristics.maxSpeedInMiles){
+            else if (SpeedInMiles < _carСharacteristics.maxSpeedInMiles){
                 Acceleration();
             }
+
 
             _speedInMiles = Mathf.Clamp(_speedInMiles, _carСharacteristics.minSpeedInMiles,
                 _carСharacteristics.maxSpeedInMiles);
         }
 
         private void HorizontalMovement(){
-            if (Input.GetKeyDown(KeyCode.LeftArrow)){
-                _indexOfRoad--;
-                _playerAnimator.MoveLeft();
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow)){
-                _indexOfRoad++;
-                _playerAnimator.MoveRight();
-            }
-
-
             _indexOfRoad = Mathf.Clamp(_indexOfRoad, _minIndexOfRoad, _maxIndexOfRoad);
             _newPosition = new Vector3(_indexOfRoad * _distanceToMove, transform.position.y, transform.position.z);
 
@@ -72,19 +76,36 @@ namespace Player{
                 Vector3.Lerp(transform.position, _newPosition, Time.deltaTime * _carСharacteristics.steer);
         }
 
+        public void MoveRight(){
+            _indexOfRoad++;
+            _playerAnimator.MoveRight();
+        }
+
+        public void MoveLeft(){
+            _indexOfRoad--;
+            _playerAnimator.MoveLeft();
+        }
+
         private void Brake(){
             _speedInMiles -= _carСharacteristics.brakeStrength / _speedInMiles * Time.deltaTime;
         }
 
         private void Acceleration(){
-            _speedInMiles += (_carСharacteristics.power - stopSpeed) / _speedInMiles * Time.deltaTime;
+            _speedInMiles += (_carСharacteristics.power - _stopSpeed) / _speedInMiles * Time.deltaTime;
         }
 
+        public void BrakeOn(){
+            _isBraking = true;
+        }
+
+        public void BrakeOff(){
+            _isBraking = false;
+        }
 
         public void AddStopSpeed(){
             float engineBraking = _carСharacteristics.power * 5;
             _speedInMiles *= 0.5f;
-            stopSpeed = engineBraking;
+            _stopSpeed = engineBraking;
         }
 
         public void TurnOffMovemnt(){
