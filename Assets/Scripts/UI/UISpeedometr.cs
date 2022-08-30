@@ -15,16 +15,16 @@ namespace UI{
         [SerializeField] private Color maxSpeedColor;
 
 
-        private int speedInKilometrs;
+        private int _speedInKilometrs;
 
-        private float relativelySpeed;
+        private float _relativelySpeed;
         float H, S, V;
 
         void Update(){
-            relativelySpeed = _playerMovement.RelativelySpeed;
-            speedInKilometrs = (int) (_playerMovement.SpeedInMiles * 1.6);
-            _textMeshProUGUI.text = speedInKilometrs + " KM/H";
-            _textMeshProUGUI.color = Color.Lerp(minSpeedColor, maxSpeedColor, relativelySpeed);
+            _relativelySpeed = _playerMovement.RelativelySpeed;
+            _speedInKilometrs = (int) (_playerMovement.SpeedInMiles * 1.6);
+            _textMeshProUGUI.text = _speedInKilometrs + " KM/H";
+            _textMeshProUGUI.color = Color.Lerp(minSpeedColor, maxSpeedColor, _relativelySpeed);
             Color.RGBToHSV(_textMeshProUGUI.color, out H, out S, out V);
             _textMeshProUGUI.color = Color.HSVToRGB(H, 1, 1);
         }

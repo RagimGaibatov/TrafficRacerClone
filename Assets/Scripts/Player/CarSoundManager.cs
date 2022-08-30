@@ -8,7 +8,7 @@ namespace Player{
         [SerializeField] private AudioClip[] brakeSounds;
         [SerializeField] private AudioClip accelerationClip;
 
-        private float volume;
+        private float _volume;
 
         PlayerMovement _playerMovement;
 
@@ -16,9 +16,9 @@ namespace Player{
             _playerMovement = playerMovement;
         }
 
-        void Update(){
-            volume = _playerMovement.RelativelySpeed * 0.5f;
-            audioMotor.volume = volume;
+        private void Update(){
+            _volume = _playerMovement.RelativelySpeed * 0.5f;
+            audioMotor.volume = _volume;
             if (Input.GetKey(KeyCode.DownArrow)){
                 BrakeSound();
             }
@@ -28,16 +28,16 @@ namespace Player{
             }
         }
 
-        void MotorSound(){
+        private void MotorSound(){
             audioMotor.PlayOneShot(accelerationClip);
         }
 
 
-        void BrakeSound(){
-            audioMotor.volume = volume / 1.5f;
+        private void BrakeSound(){
+            audioMotor.volume = _volume / 1.5f;
 
             if (!audioBrake.isPlaying){
-                audioBrake.volume = volume;
+                audioBrake.volume = _volume;
                 audioBrake.PlayOneShot(brakeSounds[Random.Range(0, brakeSounds.Length)]);
             }
         }

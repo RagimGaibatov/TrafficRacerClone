@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace FPSController{
     public class FPSController : MonoBehaviour{
-        [SerializeField] private int FPS = 60;
+        [SerializeField] private int fps = 60;
 
         private void Start(){
-            Application.targetFrameRate = FPS;
+            Application.targetFrameRate = fps;
         }
     }
 }

@@ -33,26 +33,28 @@ namespace UI{
         [SerializeField] private TextMeshProUGUI currentPriceSteerMPro;
 
         private Score _score;
-        private BootStrapper _bootStrapper;
+        private BootStrapper.BootStrapper _bootStrapper;
         private Money _money;
         private PlayerMovement _playerMovement;
         private ShopInfo _shopInfo;
         private CarСharacteristics _carСharacteristics;
+        private GameOverPlayer _gameOverPlayer;
 
 
-        public void Construct(Score score, PlayerMovement playerMovement, BootStrapper bootStrapper, Money money,
-            ShopInfo shopInfo, CarСharacteristics carСharacteristics){
+        public void Construct(Score score, PlayerMovement playerMovement, BootStrapper.BootStrapper bootStrapper, Money money,
+            ShopInfo shopInfo, CarСharacteristics carСharacteristics, GameOverPlayer gameOverPlayer){
             _bootStrapper = bootStrapper;
             _score = score;
             _playerMovement = playerMovement;
-            _playerMovement.OnGameOver += OpenGameOverWindow;
+            _gameOverPlayer = gameOverPlayer;
+            _gameOverPlayer.OnGameOver += OpenGameOverWindow;
             _money = money;
             _shopInfo = shopInfo;
             _carСharacteristics = carСharacteristics;
         }
 
         private void OnDestroy(){
-            _playerMovement.OnGameOver -= OpenGameOverWindow;
+            _gameOverPlayer.OnGameOver -= OpenGameOverWindow;
         }
 
         public void OpenGameOverWindow(){

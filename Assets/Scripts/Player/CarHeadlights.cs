@@ -1,33 +1,35 @@
 ﻿using UnityEngine;
 
-public class CarHeadlights : MonoBehaviour{
-    [SerializeField] private Light rearLamp1;
-    [SerializeField] private Light rearLamp2;
-    [SerializeField] private float intensityMultiplier;
-    private float defaultIntensity;
+namespace Player{
+    public class CarHeadlights : MonoBehaviour{
+        [SerializeField] private Light rearLamp1;
+        [SerializeField] private Light rearLamp2;
+        [SerializeField] private float intensityMultiplier;
+        private float _defaultIntensity;
 
 
-    void Start(){
-        defaultIntensity = rearLamp1.intensity;
-    }
-
-    void Update(){
-        if (Input.GetKey(KeyCode.DownArrow)){
-            BrakeLight();
+        void Start(){
+            _defaultIntensity = rearLamp1.intensity;
         }
 
-        if (Input.GetKeyUp(KeyCode.DownArrow)){
-            DefaultLight();
+        void Update(){
+            if (Input.GetKey(KeyCode.DownArrow)){
+                BrakeLight();
+            }
+
+            if (Input.GetKeyUp(KeyCode.DownArrow)){
+                DefaultLight();
+            }
         }
-    }
 
-    void BrakeLight(){
-        rearLamp1.intensity = defaultIntensity * intensityMultiplier;
-        rearLamp2.intensity = defaultIntensity * intensityMultiplier;
-    }
+        void BrakeLight(){
+            rearLamp1.intensity = _defaultIntensity * intensityMultiplier;
+            rearLamp2.intensity = _defaultIntensity * intensityMultiplier;
+        }
 
-    void DefaultLight(){
-        rearLamp1.intensity = defaultIntensity;
-        rearLamp2.intensity = defaultIntensity;
+        void DefaultLight(){
+            rearLamp1.intensity = _defaultIntensity;
+            rearLamp2.intensity = _defaultIntensity;
+        }
     }
 }

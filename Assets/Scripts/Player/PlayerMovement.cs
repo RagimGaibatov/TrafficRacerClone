@@ -1,31 +1,7 @@
-﻿using System;
-using System.Collections;
-using NPC;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Player{
     public class PlayerMovement : MonoBehaviour{
-        public void Construct(Score score, CarСharacteristics carСharacteristics){
-            _score = score;
-            _carСharacteristics = carСharacteristics;
-        }
-
-        private CarСharacteristics _carСharacteristics;
-        private PlayerAnimator _playerAnimator;
-
-        private Score _score;
-        private int _newScore;
-
-        private float _speedInMiles;
-        public int Power => _carСharacteristics.power;
-        public int MaxSpeed => _carСharacteristics.maxSpeedInMiles;
-        public int BrakeStrength => _carСharacteristics.brakeStrength;
-        public float Steer => _carСharacteristics.steer;
-
-        public float SpeedInMiles => _speedInMiles;
-        public float RelativelySpeed => _speedInMiles / _carСharacteristics.maxSpeedInMiles;
-
-
         private int _indexOfRoad;
         private Vector3 _newPosition;
         [SerializeField] private int _defaultIndex = 3;
@@ -33,18 +9,24 @@ namespace Player{
         [SerializeField] private int _minIndexOfRoad = 0;
         [SerializeField] private int _maxIndexOfRoad = 3;
 
+        private CarСharacteristics _carСharacteristics;
+        private PlayerAnimator _playerAnimator;
 
-        private float _bonusScore = 1;
-        [SerializeField] private float _maxTimeToGetBonusScore = 8;
-        private float _timeFromLastEvasion;
+        private float _speedInMiles;
+        public int Power => _carСharacteristics.power;
+        public int MaxSpeed => _carСharacteristics.maxSpeedInMiles;
+        public int BrakeStrength => _carСharacteristics.brakeStrength;
+        public float Steer => _carСharacteristics.steer;
+        public float SpeedInMiles => _speedInMiles;
+        public float RelativelySpeed => _speedInMiles / _carСharacteristics.maxSpeedInMiles;
 
-        public bool IsGameOver;
-        public event Action OnGameOver;
         private float stopSpeed = 0;
 
+        public void Construct(CarСharacteristics carСharacteristics){
+            _carСharacteristics = carСharacteristics;
+        }
 
         private void Awake(){
-            _timeFromLastEvasion = _maxTimeToGetBonusScore;
             _playerAnimator = GetComponent<PlayerAnimator>();
             _indexOfRoad = _defaultIndex;
             _newPosition = transform.position;
@@ -56,7 +38,6 @@ namespace Player{
         private void Update(){
             SpeedControl();
             HorizontalMovement();
-            AddScoreFromSpeed();
         }
 
 
@@ -76,7 +57,6 @@ namespace Player{
         private void HorizontalMovement(){
             if (Input.GetKeyDown(KeyCode.LeftArrow)){
                 _indexOfRoad--;
-
                 _playerAnimator.MoveLeft();
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow)){
@@ -92,13 +72,6 @@ namespace Player{
                 Vector3.Lerp(transform.position, _newPosition, Time.deltaTime * _carСharacteristics.steer);
         }
 
-        private void AddScoreFromSpeed(){
-            if (_speedInMiles < 100) return;
-
-            _newScore = (int) (_speedInMiles * 0.01f);
-            _score.AddScore(_newScore, 1);
-        }
-
         private void Brake(){
             _speedInMiles -= _carСharacteristics.brakeStrength / _speedInMiles * Time.deltaTime;
         }
@@ -108,52 +81,14 @@ namespace Player{
         }
 
 
-        private void OnTriggerEnter(Collider other){
-            if (other.GetComponent<NPCCar>()){
-                CrashCar();
-            }
-            else if (other.GetComponent<EvasionScoreArea>()){
-                AddEvasionScore();
-            }
-        }
-
-        private void AddEvasionScore(){
-            if (_timeFromLastEvasion > Time.time - _maxTimeToGetBonusScore){
-                _bonusScore += 0.1f;
-            }
-            else{
-                _bonusScore = 1;
-            }
-
-            _timeFromLastEvasion = Time.time;
-
-            _score.AddScore((int) _speedInMiles, _bonusScore);
-        }
-
-
-        private void CrashCar(){
-            if (IsGameOver) return;
-            if (!(_speedInMiles > 15)) return;
-
-            StartCoroutine(GameOver());
-        }
-
-        IEnumerator GameOver(){
-            GetComponent<Collider>().enabled = false;
-            IsGameOver = true;
-            _playerAnimator.SwitchOffAnimator();
-            _carСharacteristics.ResetMinSpeedToNull();
-
-            _speedInMiles *= 0.5f;
+        public void AddStopSpeed(){
             float engineBraking = _carСharacteristics.power * 5;
+            _speedInMiles *= 0.5f;
             stopSpeed = engineBraking;
+        }
 
-            while (_speedInMiles > 0){
-                yield return null;
-            }
-
+        public void TurnOffMovemnt(){
             enabled = false;
-            OnGameOver?.Invoke();
         }
     }
 }

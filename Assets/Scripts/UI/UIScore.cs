@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using TMPro;
 using UnityEngine;
 
@@ -7,25 +8,25 @@ namespace UI{
         [SerializeField] private TextMeshProUGUI scoreText;
         [SerializeField] private TextMeshProUGUI addedScoreText;
 
-        private Score score;
+        private Score _score;
         private Coroutine _coroutine;
 
         public void Construct(Score score){
-            this.score = score;
-            this.score.OnChangedScore += UpdateUIScore;
-            this.score.OnAddedScore += UpdateUIAddedScore;
+            _score = score;
+            _score.OnChangedScore += UpdateUIScore;
+            _score.OnAddedScore += UpdateUIAddedScore;
 
             UpdateUIScore();
         }
 
         private void OnDestroy(){
-            this.score.OnChangedScore -= UpdateUIScore;
-            this.score.OnAddedScore -= UpdateUIAddedScore;
+            _score.OnChangedScore -= UpdateUIScore;
+            _score.OnAddedScore -= UpdateUIAddedScore;
         }
 
 
         void UpdateUIScore(){
-            scoreText.text = "Score : " + score.GetScore;
+            scoreText.text = "Score : " + _score.GetScore;
         }
 
         void UpdateUIAddedScore(int addedScore){
