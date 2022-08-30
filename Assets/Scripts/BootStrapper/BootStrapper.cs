@@ -95,7 +95,7 @@ namespace BootStrapper{
         private void CreateRoad(){
             _road = Instantiate(_roadPrefab, _roadPosition, Quaternion.identity);
             _road.Construct(_player);
-            _road.GetComponentInChildren<OrderBuildings>().Construct(_player);
+            _road.GetComponentInChildren<MoverBuildings>().Construct(_player);
         }
 
         private void CreateScore(){

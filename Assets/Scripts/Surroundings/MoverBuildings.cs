@@ -2,7 +2,7 @@ using Player;
 using UnityEngine;
 
 namespace Surroundings{
-    public class OrderBuildings : MonoBehaviour{
+    public class MoverBuildings : MonoBehaviour{
         private PlayerMovement _playerMovement;
         private Vector3 _defaultPos;
 
