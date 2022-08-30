@@ -6,11 +6,9 @@ namespace Surroundings{
         private PlayerMovement _playerMovement;
         private Vector3 _defaultPos;
 
+
         public void Construct(PlayerMovement playerMovement){
             _playerMovement = playerMovement;
-        }
-
-        private void Awake(){
             _defaultPos = transform.position;
         }
 

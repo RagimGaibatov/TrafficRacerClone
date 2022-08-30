@@ -8,7 +8,7 @@ namespace Surroundings{
 
         private PlayerMovement _playerMovement;
 
-        public void Constuct(PlayerMovement playerMovement){
+        public void Construct(PlayerMovement playerMovement){
             _playerMovement = playerMovement;
         }
 
