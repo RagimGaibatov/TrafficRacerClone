@@ -11,7 +11,7 @@ namespace NPC{
 
         Queue<NPCCar> cars = new Queue<NPCCar>();
 
-        private int sizeOfListCars = 30;
+        private int sizeOfListCars = 20;
 
         private float timeToSpawn = 10;
         private float time;

@@ -16,10 +16,10 @@ RenderSettings:
   serializedVersion: 9
   m_Fog: 1
   m_FogColor: {r: 0.52353156, g: 0.61038643, b: 0.7169812, a: 1}
-  m_FogMode: 3
+  m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_LinearFogStart: 50
+  m_LinearFogEnd: 200
   m_AmbientSkyColor: {r: 0.16480953, g: 0.18106043, b: 0.4433962, a: 1}
   m_AmbientEquatorColor: {r: 0.20676397, g: 0.33874494, b: 0.4528302, a: 1}
   m_AmbientGroundColor: {r: 0.3207547, g: 0.2929156, b: 0.23723744, a: 1}
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25286acc88847f14386af05f014e2103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerPosition: {x: 5, y: 0, z: 4}
+  _playerPosition: {x: 5, y: 0.7, z: 4}
   _roadPosition: {x: 7.5, y: 0, z: 140}
   _roadPrefab: {fileID: -4664285134261070129, guid: 56da7a315a79f814a868f0d61f9e655e, type: 3}
   _playerPrefab: {fileID: 2581960626372763166, guid: 66ac1fbb7dffdaf408126beae0f93a5e, type: 3}
@@ -423,11 +423,11 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 1
+  m_HDR: 0
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
@@ -441,14 +441,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.2164396, y: 0, z: 0, w: 0.97629607}
+  m_LocalRotation: {x: 0.13052616, y: 0, z: 0, w: 0.9914449}
   m_LocalPosition: {x: 7, y: 6, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 25, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15, y: 0, z: 0}
 --- !u!1 &1382275846
 GameObject:
   m_ObjectHideFlags: 0
@@ -552,8 +552,8 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
+    m_Type: 2
+    m_Resolution: 0
     m_CustomResolution: -1
     m_Strength: 1
     m_Bias: 0.05

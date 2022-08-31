@@ -25,11 +25,11 @@ namespace UI{
         }
 
 
-        void UpdateUIScore(){
+        private void UpdateUIScore(){
             scoreText.text = "Score : " + _score.GetScore;
         }
 
-        void UpdateUIAddedScore(int addedScore){
+        private void UpdateUIAddedScore(int addedScore){
             if (addedScore > 10){
                 if (_coroutine != null){
                     StopCoroutine(_coroutine);
