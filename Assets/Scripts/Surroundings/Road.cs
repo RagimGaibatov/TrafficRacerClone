@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Surroundings{
     public class Road : MonoBehaviour{
         [SerializeField] private Material roadMaterial;
+        [SerializeField] private Material groundMaterial;
 
 
         private PlayerMovement _playerMovement;
@@ -14,6 +15,7 @@ namespace Surroundings{
 
         void LateUpdate(){
             roadMaterial.mainTextureOffset += new Vector2(0, -_playerMovement.SpeedInMiles / 10 * Time.deltaTime);
+            groundMaterial.mainTextureOffset += new Vector2(0, -_playerMovement.SpeedInMiles / 10 * Time.deltaTime);
         }
     }
 }
