@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,44 +9,47 @@ namespace NPC{
         [SerializeField] private Transform[] spawns;
         [SerializeField] private NPCCar[] carPrefabs;
 
+        private PlayerMovement _playerMovement;
+        Queue<NPCCar> cars = new();
 
-        Queue<NPCCar> cars = new Queue<NPCCar>();
+        private readonly int _sizeOfListCars = 30;
+        private float _timeToSpawnCar;
+        private float _time;
 
-        private int sizeOfListCars = 20;
 
-        private float timeToSpawn = 10;
-        private float time;
+        public void Construct(PlayerMovement playerMovement){
+            _playerMovement = playerMovement;
+        }
 
-        void Start(){
+        private void Start(){
             InitialSpawnCars();
         }
 
         private void Update(){
-            SpawnCars();
-        }
+            _time += Time.deltaTime;
+            if (_time >= _timeToSpawnCar){
+                var randomSpawnIndex = Random.Range(0, spawns.Length);
+                var iterations = spawns.Length - randomSpawnIndex;
+                for (var i = Random.Range(0, iterations); i < iterations; i++){
+                    SpawnCar(spawns[i]);
+                }
 
-        void SpawnCars(){
-            time += Time.deltaTime;
-            if (time >= timeToSpawn){
-                int random = Random.Range(0, spawns.Length);
-                SpawnCar(spawns[random]);
-
-                timeToSpawn = random;
-
-                time = 0;
+                _time = 0;
+                _timeToSpawnCar = Random.Range(0.6f, 3f);
             }
         }
 
 
-        void SpawnCar(Transform spawnTransform){
-            NPCCar car = cars.Dequeue();
+        private void SpawnCar(Transform carTransform){
+            var car = cars.Dequeue();
             car.gameObject.SetActive(true);
-            car.transform.position = spawnTransform.position;
-            car.transform.forward = spawnTransform.forward;
+            var newTransform = car.transform;
+            newTransform.position = carTransform.position;
+            newTransform.forward = carTransform.forward;
         }
 
-        void InitialSpawnCars(){
-            for (int i = 0; i < sizeOfListCars; i++){
+        private void InitialSpawnCars(){
+            for (int i = 0; i < _sizeOfListCars; i++){
                 NPCCar car;
                 if (i % 3 == 0){
                     car = Instantiate(carPrefabs[2]);
@@ -57,6 +61,7 @@ namespace NPC{
                     car = Instantiate(carPrefabs[0]);
                 }
 
+                car.Construct(this, _playerMovement);
                 HideCar(car);
             }
         }

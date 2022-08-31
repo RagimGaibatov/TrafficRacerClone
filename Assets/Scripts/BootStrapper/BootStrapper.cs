@@ -1,7 +1,9 @@
+using NPC;
 using Player;
 using Save;
 using Surroundings;
 using UI;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -96,6 +98,7 @@ namespace BootStrapper{
             _road = Instantiate(_roadPrefab, _roadPosition, Quaternion.identity);
             _road.Construct(_player);
             _road.GetComponentInChildren<MoverBuildings>().Construct(_player);
+            _road.GetComponentInChildren<CarsSpawner>().Construct(_player);
         }
 
         private void CreateScore(){

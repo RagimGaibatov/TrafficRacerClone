@@ -4,35 +4,38 @@ using UnityEngine;
 namespace NPC{
     public class NPCCar : MonoBehaviour{
         [SerializeField] private float speed;
-        private float _defaultSpeed;
 
         private PlayerMovement _playerMovement;
-
         private CarsSpawner _carsSpawner;
-
         private Transform _transformPlayer;
         RaycastHit _hit;
 
-        private void Start(){
-            _defaultSpeed = speed;
+        public float Speed => speed;
+        private float _defaultSpeed;
 
-            _playerMovement = FindObjectOfType<PlayerMovement>();
+        public void Construct(CarsSpawner carsSpawner, PlayerMovement playerMovement){
+            _carsSpawner = carsSpawner;
+            _playerMovement = playerMovement;
+            _defaultSpeed = speed;
+        }
+
+        private void Start(){
             _transformPlayer = _playerMovement.transform;
-            _carsSpawner = FindObjectOfType<CarsSpawner>();
         }
 
         private void Update(){
-            Vector3 forwardVector = transform.forward;
-            if (Physics.Raycast(transform.position, forwardVector, out _hit, 10)){
-                if (_hit.collider.GetComponent<NPCCar>()){
-                    speed /= _defaultSpeed / 3;
+            var forwardVector = transform.forward;
+            if (Physics.Raycast(transform.position, forwardVector, out _hit, 25)){
+                if (_hit.collider.TryGetComponent<NPCCar>(out var frontNpc)){
+                    speed = frontNpc.Speed * 0.8f;
                 }
             }
             else{
                 speed = _defaultSpeed;
             }
 
-            float dot = Vector3.Dot(transform.forward, _transformPlayer.forward);
+
+            var dot = Vector3.Dot(transform.forward, _transformPlayer.forward);
             if (dot > 0){
                 transform.Translate((Vector3.forward * (speed - _playerMovement.SpeedInMiles)) * Time.deltaTime);
             }
@@ -42,9 +45,8 @@ namespace NPC{
         }
 
         private void OnTriggerEnter(Collider other){
-            if (other.GetComponent<RemoverNpc>()){
-                _carsSpawner.HideCar(this);
-            }
+            if (!other.GetComponent<RemoverNpc>()) return;
+            _carsSpawner.HideCar(this);
         }
     }
 }

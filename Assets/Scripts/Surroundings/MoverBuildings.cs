@@ -13,7 +13,7 @@ namespace Surroundings{
         }
 
         private void Update(){
-            transform.Translate(_playerMovement.SpeedInMiles * Time.deltaTime * 0.5f, 0, 0);
+            transform.Translate(0, 0, -_playerMovement.SpeedInMiles * Time.deltaTime * 0.5f);
         }
 
         private void OnTriggerEnter(Collider other){

@@ -46,7 +46,7 @@ namespace Player{
             }
 
             _playerAnimator.SwitchOffAnimator();
-            _playerMovement.TurnOffMovemnt();
+            _playerMovement.TurnOffMovement();
             OnGameOver?.Invoke();
         }
     }

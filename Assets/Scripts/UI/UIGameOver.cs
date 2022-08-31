@@ -81,44 +81,40 @@ namespace UI{
         }
 
 
-        public void BuyPower(){
-            if (_money.AmountOfMoney > _shopInfo.pricePower){
-                _carСharacteristics.power += _shopInfo.addPower;
-                _money.AmountOfMoney -= _shopInfo.pricePower;
-                _shopInfo.addPower = (int) (_shopInfo.multiplier * _shopInfo.addPower);
-                _shopInfo.pricePower = (int) (_shopInfo.multiplier * _shopInfo.pricePower);
-                UpdatePowerUI();
-            }
+        public void TryBuyPower(){
+            if (_money.AmountOfMoney <= _shopInfo.pricePower) return;
+            _carСharacteristics.power += _shopInfo.addPower;
+            _money.AmountOfMoney -= _shopInfo.pricePower;
+            _shopInfo.addPower = (int) (_shopInfo.multiplier * _shopInfo.addPower);
+            _shopInfo.pricePower = (int) (_shopInfo.multiplier * _shopInfo.pricePower);
+            UpdatePowerUI();
         }
 
-        public void BuyBrakeStrength(){
-            if (_money.AmountOfMoney > _shopInfo.priceBrake){
-                _carСharacteristics.brakeStrength += _shopInfo.addBrakeStrength;
-                _money.AmountOfMoney -= _shopInfo.priceBrake;
-                _shopInfo.addBrakeStrength = (int) (_shopInfo.multiplier * _shopInfo.addBrakeStrength);
-                _shopInfo.priceBrake = (int) (_shopInfo.multiplier * _shopInfo.priceBrake);
-                UpdateBrakeUI();
-            }
+        public void TryBuyBrakeStrength(){
+            if (_money.AmountOfMoney <= _shopInfo.priceBrake) return;
+            _carСharacteristics.brakeStrength += _shopInfo.addBrakeStrength;
+            _money.AmountOfMoney -= _shopInfo.priceBrake;
+            _shopInfo.addBrakeStrength = (int) (_shopInfo.multiplier * _shopInfo.addBrakeStrength);
+            _shopInfo.priceBrake = (int) (_shopInfo.multiplier * _shopInfo.priceBrake);
+            UpdateBrakeUI();
         }
 
-        public void BuyMaxSpeed(){
-            if (_money.AmountOfMoney > _shopInfo.priceSpeed){
-                _carСharacteristics.maxSpeedInMiles += _shopInfo.addSpeed;
-                _money.AmountOfMoney -= _shopInfo.priceSpeed;
-                _shopInfo.addSpeed = (int) (_shopInfo.multiplier * _shopInfo.addSpeed);
-                _shopInfo.priceSpeed = (int) (_shopInfo.multiplier * _shopInfo.priceSpeed);
-                UpdateMaxSpeedUI();
-            }
+        public void TryBuyMaxSpeed(){
+            if (_money.AmountOfMoney <= _shopInfo.priceSpeed) return;
+            _carСharacteristics.maxSpeedInMiles += _shopInfo.addSpeed;
+            _money.AmountOfMoney -= _shopInfo.priceSpeed;
+            _shopInfo.addSpeed = (int) (_shopInfo.multiplier * _shopInfo.addSpeed);
+            _shopInfo.priceSpeed = (int) (_shopInfo.multiplier * _shopInfo.priceSpeed);
+            UpdateMaxSpeedUI();
         }
 
-        public void BuySteer(){
-            if (_money.AmountOfMoney > _shopInfo.priceSteer){
-                _carСharacteristics.steer += _shopInfo.addSteer;
-                _money.AmountOfMoney -= _shopInfo.priceSteer;
-                _shopInfo.addSteer = _shopInfo.multiplier * _shopInfo.addSteer;
-                _shopInfo.priceSteer = (int) (_shopInfo.multiplier * _shopInfo.priceSteer);
-                UpdateSteerUI();
-            }
+        public void TryBuySteer(){
+            if (_money.AmountOfMoney <= _shopInfo.priceSteer) return;
+            _carСharacteristics.steer += _shopInfo.addSteer;
+            _money.AmountOfMoney -= _shopInfo.priceSteer;
+            _shopInfo.addSteer = _shopInfo.multiplier * _shopInfo.addSteer;
+            _shopInfo.priceSteer = (int) (_shopInfo.multiplier * _shopInfo.priceSteer);
+            UpdateSteerUI();
         }
 
 

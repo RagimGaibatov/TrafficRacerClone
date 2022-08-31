@@ -108,7 +108,7 @@ namespace Player{
             _stopSpeed = engineBraking;
         }
 
-        public void TurnOffMovemnt(){
+        public void TurnOffMovement(){
             enabled = false;
         }
     }
