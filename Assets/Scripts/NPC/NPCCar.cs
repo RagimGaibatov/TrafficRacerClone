@@ -29,9 +29,9 @@ namespace NPC{
                 if (_hit.collider.TryGetComponent<NPCCar>(out var frontNpc)){
                     speed = frontNpc.Speed * 0.8f;
                 }
-            }
-            else{
-                speed = _defaultSpeed;
+                else{
+                    speed = _defaultSpeed;
+                }
             }
 
 
