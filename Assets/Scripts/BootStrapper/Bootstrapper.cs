@@ -3,12 +3,11 @@ using Player;
 using Save;
 using Surroundings;
 using UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace BootStrapper{
-    public class BootStrapper : MonoBehaviour{
+namespace Bootstrapper{
+    public class Bootstrapper : MonoBehaviour{
         [SerializeField] private Vector3 _playerPosition;
         [SerializeField] private Vector3 _roadPosition;
         [SerializeField] Road _roadPrefab;

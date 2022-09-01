@@ -35,7 +35,7 @@ namespace UI{
         [SerializeField] private BrakeButton brakeButton;
 
         private Score _score;
-        private BootStrapper.BootStrapper _bootStrapper;
+        private Bootstrapper.Bootstrapper _bootstrapper;
         private Money _money;
         private PlayerMovement _playerMovement;
         private ShopInfo _shopInfo;
@@ -43,9 +43,9 @@ namespace UI{
         private GameOverPlayer _gameOverPlayer;
 
 
-        public void Construct(Score score, PlayerMovement playerMovement, BootStrapper.BootStrapper bootStrapper,
+        public void Construct(Score score, PlayerMovement playerMovement, Bootstrapper.Bootstrapper bootstrapper,
             Money money, ShopInfo shopInfo, CarСharacteristics carСharacteristics, GameOverPlayer gameOverPlayer){
-            _bootStrapper = bootStrapper;
+            _bootstrapper = bootstrapper;
             _score = score;
             _playerMovement = playerMovement;
             _gameOverPlayer = gameOverPlayer;
@@ -119,11 +119,11 @@ namespace UI{
 
 
         public void RestartGame(){
-            _bootStrapper.RestartGame();
+            _bootstrapper.RestartGame();
         }
 
         public void QuitGame(){
-            _bootStrapper.QuitGame();
+            _bootstrapper.QuitGame();
         }
 
 
