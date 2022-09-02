@@ -4,6 +4,7 @@ using UnityEngine;
 namespace NPC{
     public class NPCCar : MonoBehaviour{
         [SerializeField] private float speed;
+        [SerializeField] private Transform raycastTransform;
 
         private PlayerMovement _playerMovement;
         private CarsSpawner _carsSpawner;
@@ -25,13 +26,13 @@ namespace NPC{
 
         private void Update(){
             var forwardVector = transform.forward;
-            if (Physics.Raycast(transform.position, forwardVector, out _hit, 25)){
+            if (Physics.Raycast(raycastTransform.position, forwardVector, out _hit, 12)){
                 if (_hit.collider.TryGetComponent<NPCCar>(out var frontNpc)){
                     speed = frontNpc.Speed * 0.8f;
                 }
-                else{
-                    speed = _defaultSpeed;
-                }
+            }
+            else{
+                speed = _defaultSpeed;
             }
 
 
