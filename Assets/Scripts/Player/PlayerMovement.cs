@@ -36,7 +36,7 @@ namespace Player{
             _indexOfRoad = _defaultIndex;
             _newPosition = transform.position;
 
-            int initSpeed = 50;
+            var initSpeed = 50;
             _speedInMiles = initSpeed;
         }
 

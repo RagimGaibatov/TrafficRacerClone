@@ -26,7 +26,7 @@ namespace UI{
 
 
         private void UpdateUIScore(){
-            scoreText.text = "Score : " + _score.GetScore;
+            scoreText.text = $"Score : {_score.GetScore}";
         }
 
         private void UpdateUIAddedScore(int addedScore){
@@ -35,12 +35,12 @@ namespace UI{
                     StopCoroutine(_coroutine);
                 }
 
-                addedScoreText.text = "+ " + addedScore;
+                addedScoreText.text = $"+ {addedScore}";
                 _coroutine = StartCoroutine(SwitchOnAndOffUIAddedScore());
             }
         }
 
-        IEnumerator SwitchOnAndOffUIAddedScore(){
+        private IEnumerator SwitchOnAndOffUIAddedScore(){
             addedScoreText.gameObject.SetActive(true);
             yield return new WaitForSeconds(1.5f);
             addedScoreText.gameObject.SetActive(false);

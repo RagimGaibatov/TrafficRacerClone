@@ -33,10 +33,9 @@ namespace Player{
         public void BrakeSound(){
             audioMotor.volume = _volume / 1.5f;
 
-            if (!audioBrake.isPlaying){
-                audioBrake.volume = _volume;
-                audioBrake.PlayOneShot(brakeSounds[Random.Range(0, brakeSounds.Length)]);
-            }
+            if (audioBrake.isPlaying) return;
+            audioBrake.volume = _volume;
+            audioBrake.PlayOneShot(brakeSounds[Random.Range(0, brakeSounds.Length)]);
         }
     }
 }

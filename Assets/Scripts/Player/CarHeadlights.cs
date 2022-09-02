@@ -8,7 +8,7 @@ namespace Player{
         private float _defaultIntensity;
 
 
-        void Start(){
+        private void Start(){
             _defaultIntensity = rearLamp1.intensity;
         }
 

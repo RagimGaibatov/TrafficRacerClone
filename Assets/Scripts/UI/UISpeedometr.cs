@@ -23,7 +23,7 @@ namespace UI{
         void Update(){
             _relativelySpeed = _playerMovement.RelativelySpeed;
             _speedInKilometrs = (int) (_playerMovement.SpeedInMiles * 1.6);
-            _textMeshProUGUI.text = _speedInKilometrs + " KM/H";
+            _textMeshProUGUI.text = $"{_speedInKilometrs} KM/H";
             _textMeshProUGUI.color = Color.Lerp(minSpeedColor, maxSpeedColor, _relativelySpeed);
             Color.RGBToHSV(_textMeshProUGUI.color, out H, out S, out V);
             _textMeshProUGUI.color = Color.HSVToRGB(H, 1, 1);

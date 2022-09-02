@@ -35,7 +35,7 @@ namespace Player{
             StartCoroutine(GameOver());
         }
 
-        IEnumerator GameOver(){
+        private IEnumerator GameOver(){
             GetComponent<Collider>().enabled = false;
             _isGameOver = true;
             _carСharacteristics.ResetMinSpeedToNull();
